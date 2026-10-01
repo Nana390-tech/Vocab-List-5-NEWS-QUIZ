@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading Test 5 — The Towers That Drink Fog</title>
+<style>
+:root{
+  --ink:#33162A; --berry:#7A2E4E; --rose:#A8577A; --steel:#2E6E8E; --green:#2E7D5B; --red:#B3342E;
+  --paper:#F7F2F4; --white:#fff; --line:#E0CFD7; --muted:#6E5A65; --pale:#F2E6EB; --cream:#FFF6E9;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%}
+body{background:var(--paper);color:var(--ink);
+  font-family:"Segoe UI",Roboto,system-ui,-apple-system,Arial,sans-serif;font-size:18px;line-height:1.55}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px 60px}
+
+.bar{position:sticky;top:0;z-index:60;background:var(--ink);color:#fff;border-bottom:4px solid var(--steel)}
+.bar-in{max-width:1400px;margin:0 auto;padding:9px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-weight:700;font-size:16.5px}
+.brand span{color:var(--rose)}
+.stats{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.stat{background:rgba(255,255,255,.14);border-radius:999px;padding:4px 13px;font-size:14.5px;font-weight:600;white-space:nowrap}
+.stat b{color:#F2C14E}
+
+h1{font-family:Georgia,"Times New Roman",serif;font-size:2.05rem;line-height:1.2;margin:.55em 0 .2em}
+h2{font-family:Georgia,serif;font-size:1.4rem;margin:1.3em 0 .45em}
+h3{font-size:1.08rem;margin:1.1em 0 .35em}
+.card{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:22px;margin:18px 0}
+.btn{font:inherit;font-weight:700;cursor:pointer;border:none;border-radius:10px;padding:13px 22px;
+  background:var(--berry);color:#fff;transition:background .2s,transform .08s}
+.btn:hover{background:var(--rose)}
+.btn:active{transform:translateY(1px)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.alt{background:#fff;color:var(--berry);border:2px solid var(--berry)}
+.btn.alt:hover{background:var(--pale)}
+.btn.gold{background:var(--steel);color:#fff}
+.btn.gold:hover{background:#3b85a8}
+.btn.sm{padding:8px 15px;font-size:15px;border-radius:8px}
+:focus-visible{outline:3px solid var(--steel);outline-offset:2px}
+.hide{display:none !important}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.lead{font-size:1.1rem;color:var(--muted);max-width:62ch}
+.kicker{color:var(--berry);font-weight:700;font-size:15px}
+.note{background:var(--pale);border-left:5px solid var(--berry);padding:12px 16px;border-radius:0 10px 10px 0;margin:14px 0}
+.warn{background:var(--cream);border-left:5px solid var(--steel);padding:12px 16px;border-radius:0 10px 10px 0;margin:14px 0}
+input[type=text]{font:inherit;padding:10px 12px;border:2px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);width:100%}
+input[type=text]:focus{border-color:var(--berry)}
+select{font:inherit;padding:10px 12px;border:2px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);width:100%}
+select:focus{border-color:var(--berry)}
+label.fld{display:block;font-weight:600;margin:14px 0 6px}
+
+.steps{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0}
+.step{font-size:14px;font-weight:700;border-radius:999px;padding:6px 14px;background:#fff;border:2px solid var(--line);color:var(--muted)}
+.step.on{background:var(--berry);border-color:var(--berry);color:#fff}
+.step.ok{background:var(--green);border-color:var(--green);color:#fff}
+.tbox{border:1px solid var(--line);border-left:6px solid var(--steel);border-radius:0 12px 12px 0;background:#fff;padding:16px 18px;margin:14px 0}
+.tbox h4{margin:0 0 6px;font-size:1.02rem;color:var(--berry)}
+.trap{border-left-color:var(--red)}
+.trap h4{color:var(--red)}
+ol.method{margin:6px 0 0 20px;padding:0}
+ol.method li{margin:6px 0}
+.mini{background:var(--pale);border-radius:12px;padding:16px;margin-top:16px}
+
+#split{display:flex;height:calc(100vh - 58px);position:relative}
+#pane1,#pane2{overflow-y:auto;padding:20px 22px 80px}
+#pane1{flex:0 0 50%;background:#fff;border-right:1px solid var(--line)}
+#pane2{flex:1 1 auto}
+#divider{width:12px;cursor:col-resize;background:var(--pale);flex:0 0 12px;position:relative;touch-action:none}
+#divider::after{content:"";position:absolute;top:50%;left:3px;width:6px;height:52px;margin-top:-26px;background:var(--berry);border-radius:99px;opacity:.5}
+#divider:hover::after{opacity:1}
+.passage{font-family:Georgia,"Times New Roman",serif;font-size:1.06rem;line-height:1.72;max-width:66ch}
+.passage p{margin:0 0 1.05em}
+.pl{display:inline-block;font-family:"Segoe UI",sans-serif;font-weight:700;color:#fff;background:var(--berry);
+  width:26px;height:26px;line-height:26px;text-align:center;border-radius:6px;margin-right:9px;font-size:14px;vertical-align:2px}
+.passage p.lit{background:var(--cream);border-radius:6px;box-shadow:0 0 0 8px var(--cream)}
+/* ---------- highlighter ---------- */
+mark.hl{background:#FFE08A;color:inherit;border-radius:3px;padding:0 1px;cursor:pointer;box-shadow:inset 0 -2px 0 rgba(0,0,0,.09)}
+mark.hl:hover{background:#FFD24D}
+#hlPop{position:fixed;z-index:150;display:none;background:var(--ink);border-radius:10px;padding:6px;box-shadow:0 6px 18px rgba(0,0,0,.28)}
+#hlPop button{font:inherit;font-size:14px;font-weight:700;border:none;border-radius:7px;padding:8px 14px;cursor:pointer;background:#FFE08A;color:#2B2B2B}
+#hlPop button+button{margin-left:6px;background:transparent;color:#fff}
+.hl-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:4px 0 16px}
+.hl-tools small{color:var(--muted);font-size:13.5px}
+.ptitle{font-family:Georgia,serif;font-size:1.6rem;margin:0 0 .1em}
+.psub{color:var(--muted);font-size:15px;margin-bottom:10px}
+
+.qgrp{margin-bottom:28px}
+.qgrp h3{margin-top:0;color:var(--berry);font-size:1.12rem}
+.inst{background:var(--pale);border-radius:10px;padding:11px 14px;font-size:15.5px;margin-bottom:14px}
+.qitem{display:flex;gap:12px;align-items:flex-start;margin:12px 0}
+.qn{flex:0 0 32px;height:32px;line-height:30px;text-align:center;border:2px solid var(--berry);color:var(--berry);
+  border-radius:8px;font-weight:700;font-size:15px;background:#fff;cursor:pointer}
+.qn.filled{background:var(--berry);color:#fff}
+.qbody{flex:1 1 auto;min-width:0}
+.opts label{display:block;border:2px solid var(--line);border-radius:9px;padding:10px 13px;margin:7px 0;cursor:pointer;background:#fff}
+.opts label:hover{border-color:var(--berry);background:var(--pale)}
+.opts input{margin-right:9px}
+.opts label.on{border-color:var(--berry);background:var(--pale)}
+table.tbl{width:100%;border-collapse:collapse;font-size:.95rem;background:#fff;margin:8px 0}
+table.tbl th,table.tbl td{border:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top}
+table.tbl th{background:var(--berry);color:#fff;font-weight:600}
+.featbox{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px;background:#fff;
+  border:2px dashed var(--berry);border-radius:10px;padding:12px;margin:10px 0;font-size:15.5px}
+.featbox b{color:var(--berry)}
+svg.plan{width:100%;height:auto;background:#fff;border:1px solid var(--line);border-radius:10px;margin:8px 0}
+.submit-bar{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;margin:26px 0 20px}
+.submit-bar p{margin:0 0 12px;color:var(--muted);font-size:15px}
+
+.big{font-family:Georgia,serif;font-size:3.6rem;font-weight:700;color:var(--berry);line-height:1}
+.breakdown{width:100%;border-collapse:collapse;margin-top:8px}
+.breakdown td{padding:8px 6px;border-bottom:1px solid var(--line);font-size:.97rem}
+.meter{height:10px;background:var(--pale);border-radius:99px;overflow:hidden;min-width:100px}
+.meter>i{display:block;height:100%}
+.rev{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:9px 0;background:#fff}
+.rev.bad{border-left:5px solid var(--red)}
+.rev.good{border-left:5px solid var(--green)}
+.tag{font-size:13px;font-weight:700;color:#fff;background:var(--green);border-radius:6px;padding:2px 8px}
+.rev.bad .tag{background:var(--red)}
+.ev{background:var(--cream);border-radius:8px;padding:9px 12px;margin-top:8px;font-family:Georgia,serif;font-size:.97rem}
+.cert{background:#fff;border:3px double var(--berry);border-radius:8px;padding:34px 26px;text-align:center;margin:20px 0}
+.cert h2{font-family:Georgia,serif;font-size:1.95rem;margin:.2em 0;color:var(--berry)}
+.cert .nm{font-family:Georgia,serif;font-size:2rem;border-bottom:2px solid var(--steel);display:inline-block;padding:0 24px 4px;margin:12px 0}
+.foot{text-align:center;color:var(--muted);font-size:14px;padding:24px 0 8px;border-top:1px solid var(--line);margin-top:28px}
+
+@media (max-width:820px){
+  #split{display:block;height:auto}
+  #pane1{flex:none;width:100%;border-right:none;border-bottom:3px solid var(--berry);max-height:46vh;padding:16px}
+  #pane2{padding:16px 16px 60px}
+  #divider{display:none}
+  body{font-size:17px}
+  h1{font-size:1.6rem}
+}
+@media print{.bar,.btn,.noprint,#divider{display:none!important} body{background:#fff}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:99}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="bar-in">
+    <div class="brand">Reading Test 5 <span>·</span> News</div>
+    <div class="stats">
+      <div class="stat" id="sPhase">Getting started</div>
+      <div class="stat">Answered <b id="sAns">0</b>/20</div>
+      <button class="btn alt sm hide" id="btnBackTeach" onclick="goTeach()">Question types</button>
+    </div>
+  </div>
+</div>
+
+<section id="vStart"><div class="wrap">
+  <div style="padding-top:26px">
+    <div class="kicker">B1+ / B2 · Band 6 target · Wordlist 5 vocabulary in context</div>
+    <h1>The Towers That Drink Fog</h1>
+    <p class="lead">A 690-word science-news feature and 20 questions in the computer-delivered IELTS layout.
+    One question type is new to this series; the other four are the types that appear most often in the real
+    exam, taught again from a different angle — including True / False / Not Given, which costs Band 6
+    students more marks than any other task.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">What is in this test</h3>
+    <table class="tbl">
+      <tr><th>Questions</th><th>Type</th><th>What you write</th></tr>
+      <tr><td>1–4</td><td>Labelling a diagram <b>(new)</b></td><td>Choose a letter, A–G</td></tr>
+      <tr><td>5–9</td><td>True / False / Not Given</td><td>Choose one of three</td></tr>
+      <tr><td>10–13</td><td>Matching headings</td><td>Choose a heading, i–vii</td></tr>
+      <tr><td>14–17</td><td>Short-answer questions</td><td>No more than three words</td></tr>
+      <tr><td>18–20</td><td>Multiple choice (detail)</td><td>Choose one answer</td></tr>
+    </table>
+    <p style="color:var(--muted);font-size:15px;margin-bottom:0">The village is invented for practice, as IELTS
+    practice passages usually are. The science — fog harvesting, and the beetle it was copied from — is real.</p>
+  </div>
+
+  <div class="card">
+    <label class="fld" for="nm">Your name (it goes on the certificate)</label>
+    <input type="text" id="nm" placeholder="e.g. Latifa Al Kaabi" autocomplete="name">
+    <div class="row" style="margin-top:16px">
+      <button class="btn" onclick="startTeach()">Learn the five question types</button>
+      <button class="btn alt" onclick="skipTeach()">Go straight to the test</button>
+      <button class="btn alt" onclick="document.getElementById('loadFile').click()">Load saved answers</button>
+      <input type="file" id="loadFile" accept=".json" class="hide" onchange="loadJSON(event)">
+    </div>
+  </div>
+
+  <div class="warn"><b>The teaching part is worth doing first.</b> Each type has one trap that costs Band 6
+  students marks every time. Five short lessons, each with a practice question — about eight minutes.
+  You can skip it and come back to it at any point.</div>
+
+  <div class="foot">Designed by: Nazila Motahari &nbsp;|&nbsp; HCT Abu Dhabi &nbsp;|&nbsp; Companion to B1+ Vocabulary List 5</div>
+</div></section>
+
+<section id="vTeach" class="hide"><div class="wrap">
+  <h1 id="tTitle" style="margin-bottom:0"></h1>
+  <div class="steps" id="tSteps"></div>
+  <div class="card" id="tCard"></div>
+  <div class="row noprint">
+    <button class="btn alt" id="tPrev" onclick="teachMove(-1)">← Previous</button>
+    <button class="btn" id="tNext" onclick="teachMove(1)">Next type →</button>
+    <button class="btn gold hide" id="tGo" onclick="startTest()">Start the test</button>
+    <button class="btn gold hide" id="tResume" onclick="startTest()">← Back to the test</button>
+    <button class="btn gold hide" id="tBack" onclick="results()">← Back to my results</button>
+  </div>
+</div></section>
+
+<section id="vTest" class="hide">
+  <div id="split">
+    <div id="pane1">
+      <div class="ptitle">The Towers That Drink Fog</div>
+      <div class="psub">Read the passage and answer Questions 1–20. Tap a question number to highlight its paragraph.</div>
+      <div class="hl-tools noprint">
+        <button class="btn alt sm" onclick="clearHighlights()">Clear highlights</button>
+        <small>Select any text in the passage to highlight it. Tap a highlight to remove it.</small>
+      </div>
+      <div class="passage" id="passage"></div>
+    </div>
+    <div id="divider" role="separator" aria-label="Resize panels" tabindex="0"></div>
+    <div id="pane2">
+      <div id="qHolder"></div>
+      <div class="submit-bar">
+        <p>When you have answered everything, submit. You can still review every answer afterwards.</p>
+        <div id="submitWarn" class="warn hide"></div>
+        <button class="btn gold" onclick="submitTest()">Submit my answers</button>
+        <button class="btn alt sm" onclick="saveJSON()">Save and finish later</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vRes" class="hide"><div class="wrap">
+  <div class="card" style="text-align:center">
+    <div id="rEmoji" style="font-size:2.8rem"></div>
+    <div class="big" id="rScore">0/20</div>
+    <div style="color:var(--muted);font-weight:600" id="rBand"></div>
+    <h2 id="rMsg" style="margin-top:.3em"></h2>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Accuracy by question type</h3>
+    <table class="breakdown" id="rBreak"></table>
+    <p style="color:var(--muted);font-size:15px;margin-bottom:0">The type with the lowest bar is the one to practise next.</p>
+  </div>
+  <div id="rCert"></div>
+  <div class="card noprint">
+    <div class="row">
+      <button class="btn" onclick="showReview()">Review every answer</button>
+      <button class="btn alt" onclick="goTeach()">Review the question types</button>
+      <button class="btn alt" onclick="saveJSON()">Download my results (.json)</button>
+      <button class="btn alt" onclick="retake()">Take the test again</button>
+    </div>
+  </div>
+  <div id="rReview"></div>
+  <div class="foot">Designed by: Nazila Motahari &nbsp;|&nbsp; HCT Abu Dhabi</div>
+</div></section>
+
+<div id="hlPop">
+  <button onmousedown="event.preventDefault()" onclick="applyHighlight()">Highlight</button>
+  <button onmousedown="event.preventDefault()" onclick="hidePop()">Cancel</button>
+</div>
+
+<canvas id="confetti" class="hide"></canvas>
+
+<script>
+/* =========================================================
+   PASSAGE
+   ========================================================= */
+const PARAS=[
+["A","For most of its history, the village of Beni Khalaf had no water of its own. Water arrived by lorry, twice a week, from a town forty kilometres away, and in summer it sometimes did not arrive at all. What the village did have, on almost every morning between November and April, was fog — a thick white cloud that rolled in from the coast before sunrise, sat in the valley for three or four hours and then vanished. For generations this was treated as a nuisance. It is now the village's water supply."],
+["B","The idea is not new, and it is not even human in origin. A small desert creature, the fog-basking beetle, climbs to the top of a dune at dawn, tilts its body forward into the wind, and lets the fog collect on its back until drops run down into its mouth. Desert plants do something similar. The leaf of a fog-zone tree is usually narrow and rough rather than wide and smooth, because a rough, narrow surface catches passing droplets instead of letting them slide past. The scientists studying this had one simple question: if a beetle's back and a leaf can take water out of the atmosphere, what shape of surface would do it best?"],
+["C","The answer, after years of scientific testing, was disappointingly plain — a flat panel of fine mesh, held upright, facing the wind. A working collector is approximately four metres wide and three metres high. The mesh is stretched inside a metal frame, and the frame stands on two posts sunk into the ground. Fog blows through the mesh; droplets stick to the threads, join together, and run down into a narrow gutter fixed along the bottom edge of the panel. From the gutter a pipe carries the water downhill to a covered tank at the foot of the slope, and a single tap at the base of the tank is where the village collects it."],
+["D","The quantities are smaller than people expect and larger than they fear. One panel produces approximately two hundred litres on a good foggy morning, and nothing at all on a clear one. Beni Khalaf has forty panels, which gives the village plenty of water for drinking and cooking on most winter days but a limited supply for anything else; nobody here is washing a car with fog water. The water that arrives is remarkably pure, since it has never touched the ground, although it is still tested every month. Because the collectors depend entirely on the weather, the village now follows the fog forecast as closely as a farmer follows the rain."],
+["E","Convincing people was harder than building anything. When the first panels were proposed, most of the village was against them: the project looked like a toy, and previous promises about water had come to nothing. Three families agreed to a trial. Within one winter their neighbours could see water running from the tap, and the argument ended; the village council voted in favour of forty more panels, which were paid for by a charity working in the region. The engineer who ran the trial says she is still grateful to those three families, and that no amount of scientific evidence would have convinced the other sixty."],
+["F","The system is not perfect, and the village does not pretend that it is. Strong wind spoils a morning's collection by pushing the fog through the mesh too fast for droplets to form. A warm, dry winter can leave the panels useless for weeks. Mesh tears, and torn mesh must be replaced quickly or the water runs straight through. None of these problems is dramatic, but all of them need somebody nearby to take action the same day, which is why every project that has lasted is run by the village itself rather than from an office in a distant city."],
+["G","There are now fog collectors in a dozen dry regions, and the next question is whether they can water crops as well as people. A field needs far more than a village does, and nobody has yet built enough panels to find out. What has certainly changed is the attitude. Fog used to be the thing that spoiled the view on the way to work. In several parts of the world it is now the thing that keeps a village where it is."]
+];
+
+/* ---- diagram of a fog collector, with four numbered parts ---- */
+function planSVG(){
+ return '<svg class="plan" viewBox="0 0 620 400" role="img" aria-label="Diagram of a fog collector with four numbered parts">'+
+ '<rect width="620" height="400" fill="#FDFBFC"/>'+
+ /* ground slope */
+ '<path d="M0,300 Q180,308 330,330 Q470,350 620,352 V400 H0 Z" fill="#EDE3D8"/>'+
+ '<path d="M0,300 Q180,308 330,330 Q470,350 620,352" fill="none" stroke="#CDBCA9" stroke-width="2"/>'+
+ /* wind arrows */
+ '<g stroke="#9AC3D6" stroke-width="3" fill="none">'+
+ '<path d="M24,110 h56"/><path d="M70,102 l12,8 l-12,8"/>'+
+ '<path d="M24,150 h56"/><path d="M70,142 l12,8 l-12,8"/>'+
+ '<path d="M24,190 h56"/><path d="M70,182 l12,8 l-12,8"/></g>'+
+ '<text x="24" y="90" font-size="14" fill="#5E8DA3" font-family="Georgia,serif" font-style="italic">fog blown by the wind</text>'+
+ /* posts */
+ '<rect x="112" y="92" width="10" height="208" fill="#8C7B6B"/>'+
+ '<rect x="276" y="92" width="10" height="208" fill="#8C7B6B"/>'+
+ '<text x="124" y="292" font-size="13" fill="#6E5A65" font-family="Georgia,serif">posts</text>'+
+ /* frame + mesh */
+ '<rect x="106" y="86" width="186" height="150" fill="none" stroke="#33162A" stroke-width="5"/>'+
+ '<g stroke="#B9A8B1" stroke-width="1.4">'+
+ '<path d="M118,96 V228 M134,96 V228 M150,96 V228 M166,96 V228 M182,96 V228 M198,96 V228 M214,96 V228 M230,96 V228 M246,96 V228 M262,96 V228 M278,96 V228"/>'+
+ '<path d="M112,104 H286 M112,120 H286 M112,136 H286 M112,152 H286 M112,168 H286 M112,184 H286 M112,200 H286 M112,216 H286"/></g>'+
+ '<text x="150" y="76" font-size="14" font-weight="700" fill="#33162A">mesh panel in a metal frame</text>'+
+ /* 1 = gutter */
+ '<rect x="104" y="236" width="190" height="12" rx="3" fill="#7A2E4E"/>'+
+ '<circle cx="330" cy="242" r="17" fill="#2E6E8E"/><text x="330" y="249" font-size="18" font-weight="700" fill="#fff" text-anchor="middle">1</text>'+
+ /* 2 = pipe */
+ '<path d="M292,244 Q380,250 420,286 Q446,310 470,316" stroke="#5E8DA3" stroke-width="9" fill="none" stroke-linecap="round"/>'+
+ '<circle cx="392" cy="310" r="17" fill="#2E6E8E"/><text x="392" y="317" font-size="18" font-weight="700" fill="#fff" text-anchor="middle">2</text>'+
+ /* 3 = tank */
+ '<rect x="462" y="300" width="112" height="62" rx="6" fill="#C9D9E2" stroke="#33162A" stroke-width="3"/>'+
+ '<rect x="456" y="290" width="124" height="14" rx="4" fill="#8C7B6B"/>'+
+ '<circle cx="520" cy="268" r="17" fill="#2E6E8E"/><text x="520" y="275" font-size="18" font-weight="700" fill="#fff" text-anchor="middle">3</text>'+
+ /* 4 = tap */
+ '<path d="M470,352 h-18 v10" stroke="#8C7B6B" stroke-width="7" fill="none"/>'+
+ '<rect x="444" y="340" width="12" height="10" rx="2" fill="#8C7B6B"/>'+
+ '<circle cx="416" cy="372" r="17" fill="#2E6E8E"/><text x="416" y="379" font-size="18" font-weight="700" fill="#fff" text-anchor="middle">4</text>'+
+ '<text x="600" y="392" font-size="12" fill="#8C7B6B" text-anchor="end" font-family="Georgia,serif">foot of the slope</text>'+
+ '</svg>';
+}
+const PARTS=[
+ {l:"A",t:"the mesh"},{l:"B",t:"the metal frame"},{l:"C",t:"the posts"},{l:"D",t:"the gutter"},
+ {l:"E",t:"the pipe"},{l:"F",t:"the tank"},{l:"G",t:"the tap"}
+];
+const HEADINGS=[
+ {l:"i",t:"Learning from a beetle and a leaf"},
+ {l:"ii",t:"How much water, and how pure"},
+ {l:"iii",t:"Where the idea was first used"},
+ {l:"iv",t:"Winning the village over"},
+ {l:"v",t:"What still goes wrong"},
+ {l:"vi",t:"The cost of building one panel"},
+ {l:"vii",t:"Water for fields, not only families"}
+];
+
+/* =========================================================
+   QUESTIONS — 20 marks
+   ========================================================= */
+const ITEMS=[
+/* 1-4 diagram labelling */
+{n:1,g:"dia",t:"Labelling a diagram",a:"D",para:2,ev:"run down into a narrow gutter fixed along the bottom edge of the panel",
+ why:"<b>D — the gutter.</b> Number 1 runs along the bottom edge of the panel, which is exactly where the passage puts the gutter."},
+{n:2,g:"dia",t:"Labelling a diagram",a:"E",para:2,ev:"From the gutter a pipe carries the water downhill to a covered tank",
+ why:"<b>E — the pipe.</b> Number 2 is the line running downhill from the gutter to the tank."},
+{n:3,g:"dia",t:"Labelling a diagram",a:"F",para:2,ev:"a covered tank at the foot of the slope",
+ why:"<b>F — the tank.</b> It is covered, and it sits at the foot of the slope, which the diagram labels."},
+{n:4,g:"dia",t:"Labelling a diagram",a:"G",para:2,ev:"a single tap at the base of the tank is where the village collects it",
+ why:"<b>G — the tap.</b> Number 4 points to the small outlet at the base of the tank. The mesh, frame and posts are already labelled on the diagram, so they cannot be answers."},
+/* 5-9 TFNG */
+{n:5,g:"tfng",t:"True / False / Not Given",a:"TRUE",para:0,ev:"Water arrived by lorry, twice a week, from a town forty kilometres away",
+ why:"<b>TRUE.</b> The passage states it directly in paragraph A."},
+{n:6,g:"tfng",t:"True / False / Not Given",a:"FALSE",para:1,ev:"lets the fog collect on its back until drops run down into its mouth",
+ why:"<b>FALSE.</b> The passage says the fog collects on the beetle's <u>back</u>, not its legs. The passage contradicts the statement, so it is False, not Not Given."},
+{n:7,g:"tfng",t:"True / False / Not Given",a:"TRUE",para:3,ev:"the village now follows the fog forecast as closely as a farmer follows the rain",
+ why:"<b>TRUE.</b> Following the forecast closely is the same idea as checking it regularly."},
+{n:8,g:"tfng",t:"True / False / Not Given",a:"NOT GIVEN",para:3,ev:"One panel produces approximately two hundred litres on a good foggy morning",
+ why:"<b>NOT GIVEN.</b> The passage gives quantities, but never compares the cost of the panels with the cost of lorry water. No comparison in the passage means Not Given, however likely the statement sounds."},
+{n:9,g:"tfng",t:"True / False / Not Given",a:"NOT GIVEN",para:4,ev:"The engineer who ran the trial says she is still grateful to those three families",
+ why:"<b>NOT GIVEN.</b> We are told what the engineer says, but nothing at all about where she is from. Nothing in the passage either confirms or contradicts it."},
+/* 10-13 matching headings */
+{n:10,g:"head",t:"Matching headings",a:"i",para:1,ev:"A small desert creature, the fog-basking beetle",
+ why:"<b>i — Learning from a beetle and a leaf.</b> The whole paragraph is about copying two natural designs. Heading iii is the trap: the paragraph says the idea is not new, but it never says where it was first used."},
+{n:11,g:"head",t:"Matching headings",a:"ii",para:3,ev:"The quantities are smaller than people expect and larger than they fear",
+ why:"<b>ii — How much water, and how pure.</b> The paragraph gives the amounts and then the purity. Heading vi is the trap: cost is never mentioned."},
+{n:12,g:"head",t:"Matching headings",a:"iv",para:4,ev:"Convincing people was harder than building anything",
+ why:"<b>iv — Winning the village over.</b> The first sentence states the paragraph's subject, as topic sentences usually do."},
+{n:13,g:"head",t:"Matching headings",a:"v",para:5,ev:"The system is not perfect, and the village does not pretend that it is",
+ why:"<b>v — What still goes wrong.</b> Wind, dry winters and torn mesh are all problems with the system."},
+/* 14-17 short answer */
+{n:14,g:"short",t:"Short-answer questions",a:"four metres",acc:["four metres","approximately four metres","4 metres","four meters"],para:2,
+ ev:"A working collector is approximately four metres wide and three metres high",
+ why:"<b>(approximately) four metres.</b> Three metres is the height, not the width — read the question before you copy a number."},
+{n:15,g:"short",t:"Short-answer questions",a:"a pipe",acc:["a pipe","pipe"],para:2,ev:"From the gutter a pipe carries the water downhill to a covered tank",
+ why:"<b>A pipe.</b> Short answers are usually one or two words; the article is optional but never costs you a mark here."},
+{n:16,g:"short",t:"Short-answer questions",a:"three",acc:["three","three families","3","3 families"],para:4,ev:"Three families agreed to a trial",
+ why:"<b>Three (families).</b> The passage later mentions sixty other families, which is the number students copy by mistake."},
+{n:17,g:"short",t:"Short-answer questions",a:"crops",acc:["crops","crop"],para:6,ev:"the next question is whether they can water crops as well as people",
+ why:"<b>Crops.</b> Paragraph G asks whether fog collectors can water crops as well as people."},
+/* 18-20 detail MCQ */
+{n:18,g:"mcq",t:"Multiple choice",a:"B",para:1,ev:"a rough, narrow surface catches passing droplets instead of letting them slide past",
+ why:"<b>B.</b> The passage gives the reason directly: on a rough, narrow surface the droplets are caught rather than sliding past."},
+{n:19,g:"mcq",t:"Multiple choice",a:"C",para:3,ev:"The quantities are smaller than people expect and larger than they fear",
+ why:"<b>C.</b> The writer says the amount is smaller than people expect but bigger than they fear — a deliberate balance, not a simple 'a lot' or 'a little'."},
+{n:20,g:"mcq",t:"Multiple choice",a:"A",para:5,ev:"all of them need somebody nearby to take action the same day",
+ why:"<b>A.</b> The problems are small but urgent, so somebody nearby has to deal with them the same day. That is why village-run projects last."}
+];
+const GROUPS={dia:"Labelling a diagram",tfng:"True / False / Not Given",head:"Matching headings",short:"Short-answer questions",mcq:"Multiple choice"};
+
+/* =========================================================
+   TEACHING CARDS
+   ========================================================= */
+const TEACH=[
+{title:"Labelling a diagram",tab:"Diagram",
+ tests:"Whether you can turn a written description of an object into a picture. The passage never says “number 2 is the pipe” — it describes how the parts are joined, and you follow the water.",
+ trap:"Guessing from the picture instead of reading. A diagram always contains parts that look obvious but are already labelled, and the list always contains a part that cannot be the answer because you can see its name printed on the diagram.",
+ method:["Read the labels that are already printed on the diagram. Cross those words off the list immediately.",
+  "Find the paragraph that describes the object — it is usually one paragraph, not spread around.",
+  "Follow the description in order. Here the water moves: mesh → gutter → pipe → tank → tap.",
+  "Check that each answer is a thing, in the same form as the list gives it."],
+ mini:{q:"The passage says: <i>droplets … run down into a narrow gutter fixed along the bottom edge of the panel. From the gutter a pipe carries the water downhill to a covered tank.</i> What is directly below the bottom edge of the panel?",
+  o:["the pipe","the gutter","the tank"],a:1,
+  fb:"<b>The gutter.</b> It is <i>fixed along the bottom edge</i>. The pipe comes next, carrying water away from the gutter, and the tank is at the foot of the slope."}},
+
+{title:"True / False / Not Given",tab:"T/F/NG",
+ tests:"Whether a statement agrees with the passage, contradicts it, or is simply not dealt with. This is the task where Band 6 students lose the most marks in the whole Reading paper.",
+ trap:"Choosing False when the answer is Not Given. False means the passage says the <u>opposite</u>. Not Given means the passage says <u>nothing either way</u> — and a statement that sounds very likely, or that you know is true in real life, is still Not Given if the passage does not mention it.",
+ method:["Decide what the statement claims, in your own words.",
+  "Find the part of the passage about that subject. The questions follow the order of the passage.",
+  "Ask one question: does the passage state this, state the opposite, or not discuss it?",
+  "If you are hunting for a sentence and cannot find one, that is evidence for Not Given — not a reason to keep hunting."],
+ mini:{q:"Passage: <i>One panel produces approximately two hundred litres on a good foggy morning.</i> Statement: <i>The panels cost less than bringing water by lorry.</i>",
+  o:["TRUE","FALSE","NOT GIVEN"],a:2,
+  fb:"<b>NOT GIVEN.</b> The passage never compares the two costs. It may well be cheaper — but IELTS marks what is written, not what is probable."}},
+
+{title:"Matching headings",tab:"Headings",
+ tests:"Whether you can see the main idea of a paragraph rather than its details. There are always more headings than paragraphs, so some headings are never used.",
+ trap:"Choosing a heading because it repeats a word from the paragraph. The wrong headings are built from real words in the paragraph attached to an idea the paragraph does not actually make.",
+ method:["Do this task before you read the detailed questions, while the paragraphs are still fresh.",
+  "Read the first and last sentence of the paragraph first. The main idea is usually in one of them.",
+  "Say the paragraph's point to yourself in six words, then look for the heading that matches it.",
+  "Start with the paragraphs you are sure about, and let them remove headings from the list."],
+ mini:{q:"Paragraph: <i>Convincing people was harder than building anything … Three families agreed to a trial … the village council voted in favour of forty more panels.</i> Which heading fits?",
+  o:["The cost of building one panel","Winning the village over","What still goes wrong"],a:1,
+  fb:"<b>Winning the village over.</b> The paragraph is about persuading people. It mentions panels and a vote, but money and faults are not its subject."}},
+
+{title:"Short-answer questions",tab:"Short answer",
+ tests:"Finding a specific fact and copying it within a word limit. The questions are real questions, so your answer must actually answer them.",
+ trap:"Copying the first number or name you see near the right place. If the question asks how <u>wide</u> something is and the passage gives width and height, both numbers are sitting there waiting for you.",
+ method:["Underline the question word: how wide, how many, what, who, where.",
+  "Predict the kind of answer: a number, a thing, a person, a place.",
+  "Find it in the passage and copy it exactly, within the word limit.",
+  "Read the question again with your answer in it. Does it make sense as an answer?"],
+ mini:{q:"Question: <i>How wide is a working collector?</i> Passage: <i>A working collector is approximately four metres wide and three metres high.</i>",
+  o:["three metres","four metres","seven metres"],a:1,
+  fb:"<b>Four metres.</b> Three metres is the height. Both numbers are in the same sentence, which is exactly why the question is asked this way."}},
+
+{title:"Multiple choice (detail)",tab:"Multiple choice",
+ tests:"Close reading of one specific point. Unlike a main-idea question, the answer is in one or two sentences, and the wrong options are built from the sentences around them.",
+ trap:"Choosing an option because every word in it appears in the passage. Wrong options use real words from the passage in a combination the passage never makes.",
+ method:["Read the question and cover the options. Answer it yourself from the passage first.",
+  "Now look for the option closest to your own answer.",
+  "For each remaining option, find the exact word in it that makes it wrong.",
+  "Never choose an option because it is true in real life. It must be true in this passage."],
+ mini:{q:"Passage: <i>a rough, narrow surface catches passing droplets instead of letting them slide past.</i> Why is a narrow, rough leaf better at collecting fog?",
+  o:["Because it is stronger in the wind","Because droplets are caught instead of sliding off","Because it grows in a foggy place"],a:1,
+  fb:"<b>Because droplets are caught instead of sliding off.</b> The other two options sound sensible, and the passage is about fog zones and wind — but it gives only this one reason."}}
+];
+
+/* =========================================================
+   STATE
+   ========================================================= */
+const STATE={name:"",ans:{},teachDone:[],ti:0,started:false,submitted:false,score:0};
+const BY_N={}; ITEMS.forEach(it=>BY_N[it.n]=it);
+const $=id=>document.getElementById(id);
+function show(id){
+  const hp=document.getElementById("hlPop"); if(hp)hp.style.display="none";
+  ["vStart","vTeach","vTest","vRes"].forEach(v=>$(v).classList.add("hide"));
+  $(id).classList.remove("hide"); window.scrollTo(0,0);
+}
+function norm(s){return (s||"").toLowerCase().trim().replace(/[.,!?;:'"()]/g,"").replace(/\s+/g," ");}
+function esc(s){return (s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function toast(m){const d=document.createElement("div");d.textContent=m;
+ d.style.cssText="position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:11px 18px;border-radius:10px;z-index:200;font-size:15px;max-width:90%";
+ document.body.appendChild(d);setTimeout(()=>d.remove(),2600);}
+function countAns(){
+  let n=0; ITEMS.forEach(it=>{const v=STATE.ans[it.n]; if(v&&String(v).trim())n++;});
+  $("sAns").textContent=n; return n;
+}
+
+/* ---------- teaching ---------- */
+function startTeach(){STATE.name=$("nm").value.trim()||"Student";STATE.ti=0;goTeach();}
+function skipTeach(){STATE.name=$("nm").value.trim()||"Student";startTest();}
+function goTeach(){show("vTeach");$("sPhase").textContent="Learning the question types";$("btnBackTeach").classList.add("hide");renderTeach();}
+function renderSteps(){
+  $("tSteps").innerHTML=TEACH.map((x,i)=>
+   '<span class="step'+(i===STATE.ti?" on":(STATE.teachDone.includes(i)?" ok":""))+'">'+(i+1)+". "+(x.tab||x.title)+'</span>').join("");
+}
+function renderTeach(){
+  const t=TEACH[STATE.ti];
+  $("tTitle").textContent=t.title;
+  renderSteps();
+  $("tCard").innerHTML=
+   '<div class="tbox"><h4>What it tests</h4>'+t.tests+'</div>'+
+   '<div class="tbox trap"><h4>The trap</h4>'+t.trap+'</div>'+
+   '<div class="tbox"><h4>The method</h4><ol class="method">'+t.method.map(m=>"<li>"+m+"</li>").join("")+'</ol></div>'+
+   '<div class="mini"><h3 style="margin-top:0">Try it</h3><p>'+t.mini.q+'</p><div class="opts" id="miniOpts">'+
+   t.mini.o.map((o,i)=>'<label><input type="radio" name="mini" value="'+i+'" onchange="miniCheck('+i+')">'+o+'</label>').join("")+
+   '</div><div id="miniFb"></div></div>';
+  $("tPrev").disabled=STATE.ti===0;
+  $("tNext").classList.toggle("hide",STATE.ti===TEACH.length-1);
+  $("tGo").classList.toggle("hide",STATE.started||STATE.submitted);
+  $("tGo").textContent = STATE.ti===TEACH.length-1 ? "Start the test" : "Skip to the test \u2192";
+  $("tResume").classList.toggle("hide",!STATE.started||STATE.submitted);
+  $("tBack").classList.toggle("hide",!STATE.submitted);
+}
+function miniCheck(i){
+  const t=TEACH[STATE.ti];
+  document.querySelectorAll("#miniOpts label").forEach((l,k)=>{
+    l.classList.toggle("on",k===i);
+    l.style.borderColor=k===t.mini.a?"var(--green)":(k===i?"var(--red)":"var(--line)");
+    if(k===t.mini.a)l.style.background="#E6F2EC";
+  });
+  $("miniFb").innerHTML='<div class="tbox" style="border-left-color:'+(i===t.mini.a?"var(--green)":"var(--red)")+'">'+
+   (i===t.mini.a?"<h4>That's it</h4>":"<h4 style=\"color:var(--red)\">Look again</h4>")+t.mini.fb+'</div>';
+  if(!STATE.teachDone.includes(STATE.ti))STATE.teachDone.push(STATE.ti);
+  renderSteps();
+}
+function teachMove(d){const n=STATE.ti+d;if(n<0||n>=TEACH.length)return;STATE.ti=n;renderTeach();window.scrollTo({top:0,behavior:"smooth"});}
+
+/* ---------- test ---------- */
+function startTest(){
+  STATE.started=true;
+  show("vTest"); $("sPhase").textContent="Reading test";
+  $("btnBackTeach").classList.remove("hide");
+  buildPassage(); buildQuestions(); countAns();
+}
+function buildPassage(){
+  const pass=$("passage");
+  if(pass.dataset.built) return;   // keep any highlights the student has made
+  pass.dataset.built="1";
+  pass.innerHTML=PARAS.map((p,i)=>'<p id="p'+i+'"><span class="pl">'+p[0]+'</span>'+p[1]+'</p>').join("");
+}
+function litPara(i){
+  document.querySelectorAll("#passage p").forEach(p=>p.classList.remove("lit"));
+  const el=$("p"+i); if(!el)return;
+  el.classList.add("lit");
+  if(el.scrollIntoView) el.scrollIntoView({behavior:"smooth",block:"center"});
+  setTimeout(()=>el.classList.remove("lit"),2600);
+}
+function qn(n){const it=BY_N[n];
+  return '<button class="qn'+(STATE.ans[n]&&String(STATE.ans[n]).length?" filled":"")+'" id="qn'+n+
+   '" title="Highlight the paragraph" onclick="litPara('+it.para+')">'+n+'</button>';}
+
+function buildQuestions(){
+  const partSel=n=>'<select onchange="setAns('+n+',this.value)"><option value="">—</option>'+
+    PARTS.map(f=>'<option value="'+f.l+'"'+(STATE.ans[n]===f.l?" selected":"")+'>'+f.l+" — "+f.t+'</option>').join("")+'</select>';
+  const headSel=n=>'<select onchange="setAns('+n+',this.value)"><option value="">—</option>'+
+    HEADINGS.map(f=>'<option value="'+f.l+'"'+(STATE.ans[n]===f.l?" selected":"")+'>'+f.l+" — "+f.t+'</option>').join("")+'</select>';
+  const tfngSel=n=>'<select onchange="setAns('+n+',this.value)"><option value="">—</option>'+
+    ["TRUE","FALSE","NOT GIVEN"].map(v=>'<option value="'+v+'"'+(STATE.ans[n]===v?" selected":"")+'>'+v+'</option>').join("")+'</select>';
+  const inp=n=>'<input type="text" value="'+esc(STATE.ans[n]||"")+'" oninput="setAns('+n+',this.value)" autocomplete="off" spellcheck="false" aria-label="Question '+n+'">';
+
+  let h="";
+
+  /* 1-4 diagram */
+  h+='<div class="qgrp"><h3>Questions 1–4</h3>'+
+   '<div class="inst">Label the diagram of a fog collector. Choose the correct letter, <b>A–G</b>, for each number. '+
+   'Three parts are already named on the diagram, so they cannot be answers.</div>'+
+   '<div class="featbox">'+PARTS.map(f=>'<div><b>'+f.l+'</b> &nbsp;'+f.t+'</div>').join("")+'</div>'+
+   planSVG()+
+   [1,2,3,4].map(n=>'<div class="qitem">'+qn(n)+'<div class="qbody"><div style="max-width:300px">'+partSel(n)+'</div></div></div>').join("")+
+   '</div>';
+
+  /* 5-9 TFNG */
+  const tf=[[5,"Before the fog collectors were built, water was brought to the village by lorry twice a week."],
+   [6,"The fog-basking beetle collects water on its legs."],
+   [7,"The village now checks the fog forecast regularly."],
+   [8,"The fog panels cost less than bringing water to the village by lorry."],
+   [9,"The engineer who ran the first trial grew up in Beni Khalaf."]];
+  h+='<div class="qgrp"><h3>Questions 5–9</h3>'+
+   '<div class="inst">Do the following statements agree with the information in the passage? Write <b>TRUE</b> if the statement agrees, '+
+   '<b>FALSE</b> if it contradicts the passage, or <b>NOT GIVEN</b> if there is no information about it.</div>'+
+   tf.map(([n,txt])=>'<div class="qitem">'+qn(n)+'<div class="qbody">'+txt+'<div style="margin-top:7px;max-width:220px">'+tfngSel(n)+'</div></div></div>').join("")+
+   '</div>';
+
+  /* 10-13 headings */
+  h+='<div class="qgrp"><h3>Questions 10–13</h3>'+
+   '<div class="inst">Choose the correct heading for each paragraph from the list below. There are more headings than paragraphs, so some will not be used.</div>'+
+   '<div class="featbox">'+HEADINGS.map(f=>'<div><b>'+f.l+'</b> &nbsp;'+f.t+'</div>').join("")+'</div>'+
+   [[10,"Paragraph B"],[11,"Paragraph D"],[12,"Paragraph E"],[13,"Paragraph F"]].map(([n,txt])=>
+     '<div class="qitem">'+qn(n)+'<div class="qbody"><b>'+txt+'</b><div style="margin-top:7px;max-width:320px">'+headSel(n)+'</div></div></div>').join("")+
+   '</div>';
+
+  /* 14-17 short answer */
+  const sa=[[14,"How wide is a working collector?"],
+   [15,"What carries the water from the gutter down to the tank?"],
+   [16,"How many families agreed to take part in the first trial?"],
+   [17,"What does the village hope fog water may be used for in the future?"]];
+  h+='<div class="qgrp"><h3>Questions 14–17</h3>'+
+   '<div class="inst">Answer the questions below. Choose <b>NO MORE THAN THREE WORDS</b> from the passage for each answer.</div>'+
+   sa.map(([n,txt])=>'<div class="qitem">'+qn(n)+'<div class="qbody">'+txt+'<div style="margin-top:7px;max-width:300px">'+inp(n)+'</div></div></div>').join("")+
+   '</div>';
+
+  /* 18-20 MCQ */
+  const q18=["Because it is stronger in strong wind.",
+   "Because droplets are caught instead of sliding past.",
+   "Because it loses less water in the sun.",
+   "Because it grows closer to the ground."];
+  const q19=["The panels produce far more water than anyone expected.",
+   "The panels produce almost no useful water at all.",
+   "The amount is less than people expect but more than they fear.",
+   "The amount is impossible to measure accurately."];
+  const q20=["Small problems need someone close by to deal with them the same day.",
+   "Village workers are cheaper than engineers from the city.",
+   "City offices refuse to manage projects of this size.",
+   "The charity insists that each village runs its own panels."];
+  const mcq=(n,arr,label)=>'<div class="qgrp"><h3>Question '+n+'</h3><div class="inst">'+label+'</div>'+
+   '<div class="opts">'+arr.map((o,i)=>{const L="ABCD"[i];
+     return '<label'+(STATE.ans[n]===L?' class="on"':'')+'><input type="radio" name="q'+n+'" value="'+L+'"'+
+     (STATE.ans[n]===L?" checked":"")+' onchange="setAns('+n+',\''+L+'\')"><b>'+L+'</b> &nbsp;'+o+'</label>';}).join("")+'</div></div>';
+  h+=mcq(18,q18,'Choose the correct letter, <b>A–D</b>. According to paragraph <b>B</b>, why is a narrow, rough leaf better at collecting fog than a wide, smooth one?');
+  h+=mcq(19,q19,'Choose the correct letter, <b>A–D</b>. What does the writer say about the amount of water the panels produce?');
+  h+=mcq(20,q20,'Choose the correct letter, <b>A–D</b>. Why, according to paragraph <b>F</b>, are successful projects run by the village itself?');
+
+  $("qHolder").innerHTML=h;
+}
+function setAns(n,v){
+  STATE.ans[n]=v;
+  const b=$("qn"+n); if(b)b.classList.toggle("filled",!!String(v).trim());
+  document.querySelectorAll('.opts label').forEach(l=>{const i=l.querySelector("input");if(i&&i.type==="radio")l.classList.toggle("on",i.checked);});
+  countAns();
+}
+
+/* divider */
+(function(){
+  const d=$("divider"), s=$("split"); let drag=false;
+  const move=x=>{const r=s.getBoundingClientRect();let pct=(x-r.left)/r.width*100;
+    pct=Math.max(25,Math.min(75,pct)); $("pane1").style.flex="0 0 "+pct+"%";};
+  d.addEventListener("pointerdown",e=>{drag=true;d.setPointerCapture(e.pointerId);e.preventDefault();});
+  d.addEventListener("pointermove",e=>{if(drag)move(e.clientX);});
+  d.addEventListener("pointerup",e=>{drag=false;d.releasePointerCapture(e.pointerId);});
+  d.addEventListener("keydown",e=>{
+    const cur=parseFloat(($("pane1").style.flex||"0 0 50%").match(/([\d.]+)%/)[1]);
+    if(e.key==="ArrowLeft")$("pane1").style.flex="0 0 "+Math.max(25,cur-5)+"%";
+    if(e.key==="ArrowRight")$("pane1").style.flex="0 0 "+Math.min(75,cur+5)+"%";});
+})();
+
+/* ---------- marking ---------- */
+function markItem(it){
+  const v=STATE.ans[it.n];
+  if(it.acc)return it.acc.some(a=>norm(a)===norm(v))?1:0;
+  return v===it.a?1:0;
+}
+function submitTest(){
+  const n=countAns();
+  if(n<20){
+    const w=$("submitWarn");
+    w.classList.remove("hide");
+    w.innerHTML='<b>You have answered '+n+' of 20 questions.</b> Anything you leave blank scores zero. '+
+      'In the real test there is no penalty for guessing, so it is always worth writing something.'+
+      '<div class="row" style="margin-top:12px">'+
+      '<button class="btn gold" onclick="doSubmit()">Submit anyway</button>'+
+      '<button class="btn alt" onclick="cancelSubmit()">Go back and finish</button></div>';
+    if(w.scrollIntoView) w.scrollIntoView({behavior:"smooth",block:"center"});
+    return;
+  }
+  doSubmit();
+}
+function cancelSubmit(){ $("submitWarn").classList.add("hide"); }
+function doSubmit(){
+  $("submitWarn").classList.add("hide");
+  STATE.submitted=true;
+  STATE.score=ITEMS.reduce((a,it)=>a+markItem(it),0);
+  results();
+}
+function bandOf(s){
+  if(s>=19)return "Band 8.0+";
+  if(s>=17)return "Band 7.0–7.5";
+  if(s>=15)return "Band 6.5";
+  if(s>=13)return "Band 6.0";
+  if(s>=11)return "Band 5.5";
+  if(s>=9)return "Band 5.0";
+  return "Band 4.5 or below";
+}
+function results(){
+  show("vRes"); $("sPhase").textContent="Results";
+  const s=STATE.score, pct=Math.round(s/20*100);
+  $("rScore").textContent=s+"/20";
+  $("rBand").textContent=bandOf(s)+" (indicative only — a real test has 40 questions)";
+  let e,m;
+  if(pct>=90){e="🏆";m="Excellent. These five question types are under control.";}
+  else if(pct>=80){e="🎉";m="Strong — you have earned the certificate.";}
+  else if(pct>=65){e="👍";m="A solid Band 6 result. Look at your weakest type below.";}
+  else if(pct>=50){e="📰";m="Halfway. Go back through the question-type lessons, then retake.";}
+  else{e="🔁";m="Start with the five lessons again — the traps are costing you marks, not the vocabulary.";}
+  $("rEmoji").textContent=e; $("rMsg").textContent=m;
+
+  $("rBreak").innerHTML=Object.keys(GROUPS).map(k=>{
+    const list=ITEMS.filter(i=>i.g===k);
+    const tot=list.length, got=list.reduce((a,i)=>a+markItem(i),0);
+    const p=Math.round(got/tot*100);
+    return '<tr><td style="width:42%">'+GROUPS[k]+'</td><td style="width:15%"><b>'+got+'/'+tot+'</b></td>'+
+     '<td><div class="meter"><i style="width:'+p+'%;background:'+(p>=80?"var(--green)":p>=50?"var(--steel)":"var(--red)")+'"></i></div></td></tr>';
+  }).join("");
+
+  if(s>=16){
+    $("rCert").innerHTML='<div class="cert"><div style="font-size:2.6rem">🏅</div>'+
+     '<div style="letter-spacing:2px;color:var(--berry);font-weight:700;font-size:13.5px">Higher Colleges of Technology · Abu Dhabi</div>'+
+     '<h2>Certificate of Achievement</h2><p style="margin:0;color:var(--muted)">This certifies that</p>'+
+     '<div class="nm">'+esc(STATE.name)+'</div>'+
+     '<p style="max-width:46ch;margin:8px auto">has completed <b>IELTS Reading Test 5: The Towers That Drink Fog</b>, scoring <b>'+s+
+     '/20</b> ('+pct+'%) across diagram labelling, True / False / Not Given, matching headings, short-answer and multiple-choice questions.</p>'+
+     '<p style="color:var(--muted);font-size:15px">'+new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"})+'</p>'+
+     '<p style="font-style:italic;margin-top:16px">Designed by: Nazila Motahari</p>'+
+     '<button class="btn gold noprint" onclick="window.print()" style="margin-top:8px">Print / save the certificate</button></div>';
+    confetti();
+  } else {
+    $("rCert").innerHTML='<div class="warn"><b>Certificate: not yet.</b> You need 16 out of 20. You are '+(16-s)+
+     ' mark'+((16-s)===1?"":"s")+' away — review the answers below, then take the test again.</div>';
+  }
+}
+function showReview(){
+  const html=Object.keys(GROUPS).map(k=>{
+    const list=ITEMS.filter(i=>i.g===k);
+    return '<h3>'+GROUPS[k]+'</h3>'+list.map(it=>{
+      const got=markItem(it), v=STATE.ans[it.n];
+      const given=(v&&String(v).trim())?String(v):"(no answer)";
+      const ok=got===1;
+      return '<div class="rev '+(ok?"good":"bad")+'"><span class="tag">'+got+'/1</span> '+
+       '<b>Q'+it.n+'</b> &nbsp;Your answer: '+esc(given)+
+       (ok?"":' &nbsp;·&nbsp; Correct: <b style="color:var(--green)">'+esc(it.a)+'</b>')+
+       '<div style="font-size:15.5px;margin-top:6px">'+it.why+'</div>'+
+       '<div class="ev">Paragraph '+PARAS[it.para][0]+': “…'+it.ev+'…”</div></div>';
+    }).join("");
+  }).join("");
+  $("rReview").innerHTML='<div class="card"><h2 style="margin-top:0">Every answer, with the evidence</h2>'+html+'</div>';
+  const rv=$("rReview"); if(rv.scrollIntoView) rv.scrollIntoView({behavior:"smooth"});
+}
+function retake(){
+  const w=$("submitWarn"); if(w) w.classList.add("hide");
+  STATE.ans={}; STATE.submitted=false; STATE.score=0;
+  $("rReview").innerHTML=""; $("rCert").innerHTML=""; startTest();
+}
+
+/* ---------- save / load ---------- */
+function saveJSON(){
+  const data={app:"IELTS Reading Test 5 — The Towers That Drink Fog (B1+ Wordlist 5)",
+   student:STATE.name,date:new Date().toISOString(),submitted:STATE.submitted,
+   score:STATE.submitted?STATE.score:null,outOf:20,band:STATE.submitted?bandOf(STATE.score):null,
+   byType:Object.keys(GROUPS).map(k=>{const list=ITEMS.filter(i=>i.g===k);
+     return {type:GROUPS[k],correct:STATE.submitted?list.reduce((a,i)=>a+markItem(i),0):null,outOf:list.length};}),
+   answers:ITEMS.map(it=>({n:it.n,type:it.t,given:STATE.ans[it.n]||"",correct:STATE.submitted?markItem(it)===1:null})),
+   state:{ans:STATE.ans,teachDone:STATE.teachDone,started:STATE.started,submitted:STATE.submitted,score:STATE.score}};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="ReadingTest5-"+(STATE.name||"student").replace(/\s+/g,"-")+".json";
+  a.click(); URL.revokeObjectURL(a.href);
+  toast("Saved. Open this file with the Load button to carry on.");
+}
+function loadJSON(ev){
+  const f=ev.target.files[0]; if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{try{
+    const d=JSON.parse(r.result); if(!d.state)throw 0;
+    STATE.name=d.student||"Student"; STATE.ans=d.state.ans||{};
+    STATE.teachDone=d.state.teachDone||[];
+    STATE.started=!!d.state.started||Object.keys(STATE.ans).length>0;
+    STATE.submitted=!!d.state.submitted; STATE.score=d.state.score||0;
+    $("nm").value=STATE.name;
+    if(STATE.submitted){buildPassage();results();}else{startTest();}
+    toast("Answers restored for "+STATE.name+".");
+  }catch(e){toast("That file could not be read. Choose a file saved by this app.");}};
+  r.readAsText(f); ev.target.value="";
+}
+
+/* =========================================================
+   HIGHLIGHTER
+   ========================================================= */
+let hlRange=null;
+function hidePop(){const p=$("hlPop");if(p)p.style.display="none";hlRange=null;}
+function showPop(rect){
+  const p=$("hlPop"); p.style.display="block";
+  const w=p.offsetWidth||160, h=p.offsetHeight||40;
+  let x=rect.left+rect.width/2-w/2;
+  x=Math.max(8,Math.min(x,window.innerWidth-w-8));
+  let y=rect.top-h-8; if(y<8) y=rect.bottom+8;
+  p.style.left=x+"px"; p.style.top=y+"px";
+}
+function selectionInPassage(){
+  const sel=window.getSelection();
+  if(!sel||sel.isCollapsed||!sel.rangeCount) return null;
+  const r=sel.getRangeAt(0);
+  const pass=$("passage"); if(!pass) return null;
+  const c=r.commonAncestorContainer;
+  if(c!==pass && !pass.contains(c)) return null;
+  if(!r.toString().trim()) return null;
+  return r;
+}
+function highlightRange(range){
+  if(range.collapsed) return;
+  const nodes=[]; const root=range.commonAncestorContainer;
+  if(root.nodeType===3){ nodes.push(root); }
+  else{
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{
+      acceptNode(n){
+        if(!n.nodeValue||!n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        if(n.parentNode&&n.parentNode.classList&&n.parentNode.classList.contains("pl")) return NodeFilter.FILTER_REJECT;
+        return range.intersectsNode(n)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;
+      }});
+    let n; while((n=walker.nextNode())) nodes.push(n);
+  }
+  nodes.forEach(node=>{
+    let s=0, e=node.nodeValue.length;
+    if(node===range.startContainer) s=range.startOffset;
+    if(node===range.endContainer) e=range.endOffset;
+    if(e<=s) return;
+    if(node.parentNode&&node.parentNode.nodeName==="MARK") return;
+    const mid=(s>0)?node.splitText(s):node;
+    if(e-s<mid.nodeValue.length) mid.splitText(e-s);
+    const mark=document.createElement("mark");
+    mark.className="hl"; mark.title="Tap to remove this highlight";
+    mid.parentNode.insertBefore(mark,mid); mark.appendChild(mid);
+  });
+}
+function applyHighlight(){
+  if(hlRange){ highlightRange(hlRange); const s=window.getSelection(); if(s)s.removeAllRanges(); }
+  hidePop();
+}
+function unwrapMark(m){
+  const t=document.createTextNode(m.textContent);
+  m.parentNode.replaceChild(t,m);
+  if(t.parentNode) t.parentNode.normalize();
+}
+function clearHighlights(){
+  const pass=$("passage"); if(!pass)return;
+  const marks=[...pass.querySelectorAll("mark.hl")];
+  if(!marks.length){ toast("There are no highlights to clear."); return; }
+  marks.forEach(unwrapMark); pass.normalize(); hidePop();
+  toast(marks.length+" highlight"+(marks.length===1?"":"s")+" cleared.");
+}
+["mouseup","touchend"].forEach(ev=>document.addEventListener(ev,e=>{
+  const pop=$("hlPop");
+  if(pop&&pop.contains(e.target)) return;
+  setTimeout(()=>{
+    const r=selectionInPassage();
+    if(r){ hlRange=r.cloneRange(); showPop(r.getBoundingClientRect()); } else hidePop();
+  },10);
+}));
+document.addEventListener("click",e=>{
+  if(!e.target||!e.target.closest) return;
+  const m=e.target.closest("mark.hl"); const pass=$("passage");
+  if(m&&pass&&pass.contains(m)) unwrapMark(m);
+});
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") hidePop(); });
+window.addEventListener("resize",hidePop);
+
+function confetti(){
+  const c=$("confetti"); c.classList.remove("hide");
+  const x=c.getContext&&c.getContext("2d");
+  if(!x){c.classList.add("hide");return;}
+  c.width=innerWidth; c.height=innerHeight;
+  const cols=["#7A2E4E","#2E6E8E","#2E7D5B","#A8577A","#F2C14E"];
+  let bits=Array.from({length:120},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height,
+   w:6+Math.random()*7,h:8+Math.random()*9,c:cols[(Math.random()*cols.length)|0],
+   v:1.6+Math.random()*3,r:Math.random()*6,s:(Math.random()-.5)*.2}));
+  let t=0;
+  (function loop(){t++;x.clearRect(0,0,c.width,c.height);
+    bits.forEach(b=>{b.y+=b.v;b.r+=b.s;x.save();x.translate(b.x,b.y);x.rotate(b.r);x.fillStyle=b.c;x.fillRect(-b.w/2,-b.h/2,b.w,b.h);x.restore();});
+    if(t<300)requestAnimationFrame(loop);else{x.clearRect(0,0,c.width,c.height);c.classList.add("hide");}})();
+}
+</script>
+</body>
+</html>
